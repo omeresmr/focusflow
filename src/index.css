@@ -457,7 +457,7 @@
   }
 
   .setting-con {
-    @apply flex  gap-1 items-center justify-between w-full;
+    @apply flex items-center justify-between flex-col gap-1 w-full max-w-2xl px-4 pt-4 pb-20 md:pb-4;
   }
 
   .setting-text-con {
