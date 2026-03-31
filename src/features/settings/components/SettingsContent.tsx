@@ -4,6 +4,7 @@ import Icon from '../../../shared/ui/icon/Icon';
 import SettingsCard from './SettingsCard';
 import ToggleButton from '../../../shared/ui/buttons/ToggleButton';
 import SettingsHeader from './SettingsHeader';
+import SettingText from './SettingText';
 
 export default function SettingsContent() {
   return (
@@ -22,44 +23,34 @@ export default function SettingsContent() {
         />
 
         <div className="setting-con border-b border-border py-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Focus Session</p>
-            <p className="text-sm text-muted-foreground">Default work period</p>
-          </div>
+          <SettingText
+            title="Focus Session"
+            description="Default work period"
+          />
           <div className="setting-input-con">
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">min</p>
           </div>
         </div>
         <div className="setting-con border-b border-border py-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Short Break</p>
-            <p className="text-sm text-muted-foreground">Quick rest period</p>
-          </div>
+          <SettingText title="Short Break" description="Quick rest period" />
           <div className="setting-input-con">
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">min</p>
           </div>
         </div>
         <div className="setting-con border-b border-border py-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Long Break</p>
-            <p className="text-sm text-muted-foreground">
-              Extended rest period
-            </p>
-          </div>
+          <SettingText title="Long Break" description="Extended rest period" />
           <div className="setting-input-con">
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">min</p>
           </div>
         </div>
         <div className="setting-con pt-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Long Break Interval</p>
-            <p className="text-sm text-muted-foreground">
-              Interval between long breaks
-            </p>
-          </div>
+          <SettingText
+            title="Long Break Interval"
+            description="Interval between long breaks"
+          />
           <div className="setting-input-con">
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">pomos</p>
@@ -77,23 +68,19 @@ export default function SettingsContent() {
           description="Auto-start preferences"
         />
         <div className="setting-con border-b border-border py-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Auto-start breaks</p>
-            <p className="text-sm text-muted-foreground">
-              Start breaks automatically
-            </p>
-          </div>
+          <SettingText
+            title="Auto-start breaks"
+            description="Start breaks automatically"
+          />
           <div className="setting-input-con">
             <ToggleButton />
           </div>
         </div>
         <div className="setting-con pt-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Auto-start pomodoros</p>
-            <p className="text-sm text-muted-foreground">
-              Start pomodoros automatically
-            </p>
-          </div>
+          <SettingText
+            title="Auto-start pomodoros"
+            description="Start pomodoros automatically"
+          />
           <div className="setting-input-con">
             <ToggleButton />
           </div>
@@ -113,21 +100,16 @@ export default function SettingsContent() {
           </div>
         </div>
         <div className="setting-con border-b border-border py-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Push notifications</p>
-            <p className="text-sm text-muted-foreground">
-              Browser notifications
-            </p>
-          </div>
+          <SettingText
+            title="Push notifications"
+            description="Browser notifications"
+          />
           <div className="setting-input-con">
             <ToggleButton />
           </div>
         </div>
         <div className="setting-con pt-4">
-          <div className="setting-text-con">
-            <p className="text-sm font-semibold">Sound effects</p>
-            <p className="text-sm text-muted-foreground">Play sound effects</p>
-          </div>
+          <SettingText title="Sound effects" description="Play sound effects" />
           <div className="setting-input-con">
             <ToggleButton />
           </div>
