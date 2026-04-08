@@ -1,17 +1,18 @@
 import { Bell, Clock, Zap } from 'lucide-react';
 import Description from '../../../shared/ui/description/Description';
 import Icon from '../../../shared/ui/icon/Icon';
-import SettingsCard from './SettingsCard';
 import ToggleButton from '../../../shared/ui/buttons/ToggleButton';
 import SettingsHeader from './SettingsHeader';
 import SettingText from './SettingText';
+import SettingContainer from './SettingContainer';
+import Card from '../../../shared/ui/card/Card';
 
 export default function SettingsContent() {
   return (
     <div className="settings-con">
       <p className="text-2xl font-bold">Settings</p>
       <Description text="Customize your Pomodoro experience" />
-      <SettingsCard>
+      <Card className="flex-col">
         <SettingsHeader
           icon={
             <Icon className="bg-brand-primary/15 text-brand-secondary p-2">
@@ -21,8 +22,7 @@ export default function SettingsContent() {
           title="Timer"
           description="Configure your pomodoro timer"
         />
-
-        <div className="setting-con border-b border-border py-4">
+        <SettingContainer className="border-b border-border">
           <SettingText
             title="Focus Session"
             description="Default work period"
@@ -31,22 +31,22 @@ export default function SettingsContent() {
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">min</p>
           </div>
-        </div>
-        <div className="setting-con border-b border-border py-4">
+        </SettingContainer>
+        <SettingContainer className="border-b border-border">
           <SettingText title="Short Break" description="Quick rest period" />
           <div className="setting-input-con">
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">min</p>
           </div>
-        </div>
-        <div className="setting-con border-b border-border py-4">
+        </SettingContainer>
+        <SettingContainer className="border-b border-border">
           <SettingText title="Long Break" description="Extended rest period" />
           <div className="setting-input-con">
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">min</p>
           </div>
-        </div>
-        <div className="setting-con pt-4">
+        </SettingContainer>
+        <SettingContainer>
           <SettingText
             title="Long Break Interval"
             description="Interval between long breaks"
@@ -55,9 +55,9 @@ export default function SettingsContent() {
             <input className="setting-number-input" type="number" />
             <p className="text-muted-foreground">pomos</p>
           </div>
-        </div>
-      </SettingsCard>
-      <SettingsCard>
+        </SettingContainer>
+      </Card>
+      <Card className="flex-col">
         <SettingsHeader
           icon={
             <Icon className="p-2 bg-violet-600/15 text-violet-600">
@@ -67,7 +67,7 @@ export default function SettingsContent() {
           title="Automation"
           description="Auto-start preferences"
         />
-        <div className="setting-con border-b border-border py-4">
+        <SettingContainer className="border-b border-border">
           <SettingText
             title="Auto-start breaks"
             description="Start breaks automatically"
@@ -75,8 +75,8 @@ export default function SettingsContent() {
           <div className="setting-input-con">
             <ToggleButton />
           </div>
-        </div>
-        <div className="setting-con pt-4">
+        </SettingContainer>
+        <SettingContainer>
           <SettingText
             title="Auto-start pomodoros"
             description="Start pomodoros automatically"
@@ -84,9 +84,9 @@ export default function SettingsContent() {
           <div className="setting-input-con">
             <ToggleButton />
           </div>
-        </div>
-      </SettingsCard>
-      <SettingsCard>
+        </SettingContainer>
+      </Card>
+      <Card className="flex-col">
         <div className="settings-heading">
           <Icon className="p-2 bg-green-700/15 text-green-700">
             <Bell className="w-4 h-4" />
@@ -99,7 +99,7 @@ export default function SettingsContent() {
             </p>
           </div>
         </div>
-        <div className="setting-con border-b border-border py-4">
+        <SettingContainer className="border-b border-border py-4">
           <SettingText
             title="Push notifications"
             description="Browser notifications"
@@ -107,14 +107,14 @@ export default function SettingsContent() {
           <div className="setting-input-con">
             <ToggleButton />
           </div>
-        </div>
-        <div className="setting-con pt-4">
+        </SettingContainer>
+        <SettingContainer>
           <SettingText title="Sound effects" description="Play sound effects" />
           <div className="setting-input-con">
             <ToggleButton />
           </div>
-        </div>
-      </SettingsCard>
+        </SettingContainer>
+      </Card>
     </div>
   );
 }
