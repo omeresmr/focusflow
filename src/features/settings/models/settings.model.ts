@@ -8,6 +8,7 @@ export interface SettingsState {
   autoStartPomodoros: boolean;
   longBreakInterval: number;
   soundEnabled: boolean;
+  pushEnabled: boolean;
 }
 
 export const createDefaultSettings = (): SettingsState => ({
@@ -16,4 +17,5 @@ export const createDefaultSettings = (): SettingsState => ({
   autoStartPomodoros: false,
   longBreakInterval: 4,
   soundEnabled: true,
+  pushEnabled: true,
 });

@@ -112,7 +112,15 @@ export default function SettingsContent() {
             description="Start breaks automatically"
           />
           <div className="setting-input-con">
-            <ToggleButton />
+            <ToggleButton
+              isToggled={settings.autoStartBreaks}
+              onClick={() =>
+                updateSettings({
+                  ...settings,
+                  autoStartBreaks: !settings.autoStartBreaks,
+                })
+              }
+            />
           </div>
         </SettingContainer>
         <SettingContainer>
@@ -121,7 +129,15 @@ export default function SettingsContent() {
             description="Start pomodoros automatically"
           />
           <div className="setting-input-con">
-            <ToggleButton />
+            <ToggleButton
+              isToggled={settings.autoStartPomodoros}
+              onClick={() =>
+                updateSettings({
+                  ...settings,
+                  autoStartPomodoros: !settings.autoStartPomodoros,
+                })
+              }
+            />
           </div>
         </SettingContainer>
       </Card>
@@ -141,13 +157,29 @@ export default function SettingsContent() {
             description="Browser notifications"
           />
           <div className="setting-input-con">
-            <ToggleButton />
+            <ToggleButton
+              isToggled={settings.pushEnabled}
+              onClick={() =>
+                updateSettings({
+                  ...settings,
+                  pushEnabled: !settings.pushEnabled,
+                })
+              }
+            />
           </div>
         </SettingContainer>
         <SettingContainer>
           <SettingText title="Sound effects" description="Play sound effects" />
           <div className="setting-input-con">
-            <ToggleButton />
+            <ToggleButton
+              isToggled={settings.soundEnabled}
+              onClick={() =>
+                updateSettings({
+                  ...settings,
+                  soundEnabled: !settings.soundEnabled,
+                })
+              }
+            />
           </div>
         </SettingContainer>
       </Card>
