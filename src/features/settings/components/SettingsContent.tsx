@@ -6,6 +6,7 @@ import SettingsHeader from './SettingsHeader';
 import SettingText from './SettingText';
 import SettingContainer from './SettingContainer';
 import Card from '../../../shared/ui/card/Card';
+import SettingNumberInput from './SettingNumberInput';
 
 export default function SettingsContent() {
   return (
@@ -28,22 +29,19 @@ export default function SettingsContent() {
             description="Default work period"
           />
           <div className="setting-input-con">
-            <input className="setting-number-input" type="number" />
-            <p className="text-muted-foreground">min</p>
+            <SettingNumberInput />
           </div>
         </SettingContainer>
         <SettingContainer className="border-b border-border">
           <SettingText title="Short Break" description="Quick rest period" />
           <div className="setting-input-con">
-            <input className="setting-number-input" type="number" />
-            <p className="text-muted-foreground">min</p>
+            <SettingNumberInput />
           </div>
         </SettingContainer>
         <SettingContainer className="border-b border-border">
           <SettingText title="Long Break" description="Extended rest period" />
           <div className="setting-input-con">
-            <input className="setting-number-input" type="number" />
-            <p className="text-muted-foreground">min</p>
+            <SettingNumberInput />
           </div>
         </SettingContainer>
         <SettingContainer>
@@ -52,8 +50,7 @@ export default function SettingsContent() {
             description="Interval between long breaks"
           />
           <div className="setting-input-con">
-            <input className="setting-number-input" type="number" />
-            <p className="text-muted-foreground">pomos</p>
+            <SettingNumberInput format="pomos" />
           </div>
         </SettingContainer>
       </Card>
@@ -87,18 +84,15 @@ export default function SettingsContent() {
         </SettingContainer>
       </Card>
       <Card className="flex-col">
-        <div className="settings-heading">
-          <Icon className="p-2 bg-green-700/15 text-green-700">
-            <Bell className="w-4 h-4" />
-          </Icon>
-
-          <div className="settings-heading-text">
-            <p className="text-base font-bold">Notifications</p>
-            <p className="text-sm text-muted-foreground">
-              Sound & alert preferences
-            </p>
-          </div>
-        </div>
+        <SettingsHeader
+          icon={
+            <Icon className="p-2 bg-green-700/15 text-green-700">
+              <Bell className="w-4 h-4" />
+            </Icon>
+          }
+          title="Notifications"
+          description="Sound & alert preferences"
+        />
         <SettingContainer className="border-b border-border py-4">
           <SettingText
             title="Push notifications"
