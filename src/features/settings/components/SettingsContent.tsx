@@ -7,8 +7,11 @@ import SettingText from './SettingText';
 import SettingContainer from './SettingContainer';
 import Card from '../../../shared/ui/card/Card';
 import SettingNumberInput from './SettingNumberInput';
+import { useSettings } from '../contexts/SettingsContext';
 
 export default function SettingsContent() {
+  const { settings, updateSettings } = useSettings();
+
   return (
     <div className="settings-con">
       <p className="text-2xl font-bold">Settings</p>
@@ -29,19 +32,49 @@ export default function SettingsContent() {
             description="Default work period"
           />
           <div className="setting-input-con">
-            <SettingNumberInput />
+            <SettingNumberInput
+              defaultValue={settings.durations.pomodoro}
+              onChange={(e) => {
+                updateSettings({
+                  durations: {
+                    ...settings.durations,
+                    pomodoro: +e.target.value,
+                  },
+                });
+              }}
+            />
           </div>
         </SettingContainer>
         <SettingContainer className="border-b border-border">
           <SettingText title="Short Break" description="Quick rest period" />
           <div className="setting-input-con">
-            <SettingNumberInput />
+            <SettingNumberInput
+              defaultValue={settings.durations.shortBreak}
+              onChange={(e) => {
+                updateSettings({
+                  durations: {
+                    ...settings.durations,
+                    shortBreak: +e.target.value,
+                  },
+                });
+              }}
+            />
           </div>
         </SettingContainer>
         <SettingContainer className="border-b border-border">
           <SettingText title="Long Break" description="Extended rest period" />
           <div className="setting-input-con">
-            <SettingNumberInput />
+            <SettingNumberInput
+              defaultValue={settings.durations.longBreak}
+              onChange={(e) => {
+                updateSettings({
+                  durations: {
+                    ...settings.durations,
+                    longBreak: +e.target.value,
+                  },
+                });
+              }}
+            />
           </div>
         </SettingContainer>
         <SettingContainer>
@@ -50,7 +83,16 @@ export default function SettingsContent() {
             description="Interval between long breaks"
           />
           <div className="setting-input-con">
-            <SettingNumberInput format="pomos" />
+            <SettingNumberInput
+              format="pomos"
+              defaultValue={settings.longBreakInterval}
+              onChange={(e) => {
+                updateSettings({
+                  ...settings,
+                  longBreakInterval: +e.target.value,
+                });
+              }}
+            />
           </div>
         </SettingContainer>
       </Card>

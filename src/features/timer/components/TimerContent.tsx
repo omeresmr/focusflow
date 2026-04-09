@@ -16,7 +16,7 @@ import {
 } from '../../../shared/utils/timer.utils';
 
 export default function TimerContent() {
-  const settings = useSettings();
+  const { settings } = useSettings();
   const { tasks, completeTaskPomodoro } = useTasks();
   const { timerState, timerTick, handleSessionCompletion } = useTimer();
 

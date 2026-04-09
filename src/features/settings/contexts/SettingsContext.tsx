@@ -1,20 +1,47 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useReducer,
+} from 'react';
 import {
   type SettingsState,
   createDefaultSettings,
 } from '../models/settings.model';
+import reducer from '../reducers/settings.reducer';
 
+// 1) Provider value type
+type SettingsProviderValue = {
+  settings: SettingsState;
+  updateSettings: (setting: Partial<SettingsState>) => void;
+};
+
+// 2) Prop interface
 interface SettingsProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-const SettingsContext = createContext<SettingsState | null>(null);
+// 3) Context
+const SettingsContext = createContext<SettingsProviderValue | null>(null);
 
+// 4) initialState
+const initialState = createDefaultSettings();
+
+// 5) Provider component
 export function SettingsProvider({ children }: SettingsProviderProps) {
-  const [settings] = useState<SettingsState>(createDefaultSettings());
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const updateSettings = useCallback((setting: Partial<SettingsState>) => {
+    dispatch({ type: 'settings/updated', payload: setting });
+  }, []);
+
+  const settingsValue = useMemo(() => {
+    return { settings: state, updateSettings };
+  }, [state, updateSettings]);
 
   return (
-    <SettingsContext.Provider value={settings}>
+    <SettingsContext.Provider value={settingsValue}>
       {children}
     </SettingsContext.Provider>
   );
