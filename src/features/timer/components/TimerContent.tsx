@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 import { useTasks } from '../../tasks/contexts/TasksContext';
@@ -18,7 +18,8 @@ import {
 export default function TimerContent() {
   const { settings } = useSettings();
   const { tasks, completeTaskPomodoro } = useTasks();
-  const { timerState, timerTick, handleSessionCompletion } = useTimer();
+  const { timerState, timerTick, handleSessionCompletion, startTimer } =
+    useTimer();
 
   const activeTask = tasks.find((t) => t.id === timerState.activeTaskId);
 
@@ -26,14 +27,34 @@ export default function TimerContent() {
   const currentSession = getCurrentSession(timerState, tasks);
   const remainingMilliseconds =
     totalMilliseconds - timerState.millisecondsPassed;
+  const AUTO_START_DELAY = 3000;
+
+  const autoStartTimer = useCallback(
+    (sessionType: string | undefined) => {
+      if (
+        (settings.autoStartBreaks && sessionType === 'POMODORO') ||
+        (settings.autoStartPomodoros && sessionType === 'BREAK')
+      ) {
+        // Auto start timer
+        setTimeout(() => startTimer(), AUTO_START_DELAY);
+      }
+    },
+    [settings.autoStartBreaks, settings.autoStartPomodoros, startTimer]
+  );
 
   // React to timerTick
   useEffect(() => {
     if (!timerState.isRunning) return;
     const id = setInterval(() => {
       timerTick();
-      if (remainingMilliseconds <= 0)
-        handleSessionCompletion(tasks, completeTaskPomodoro);
+      if (remainingMilliseconds <= 0) {
+        const sessionType = handleSessionCompletion(
+          tasks,
+          completeTaskPomodoro
+        );
+
+        autoStartTimer(sessionType);
+      }
     }, 100);
 
     return () => clearInterval(id);
@@ -44,10 +65,12 @@ export default function TimerContent() {
     timerTick,
     completeTaskPomodoro,
     tasks,
+    autoStartTimer,
   ]);
 
   function handleSkipPhase() {
-    handleSessionCompletion(tasks, completeTaskPomodoro);
+    const sessionType = handleSessionCompletion(tasks, completeTaskPomodoro);
+    autoStartTimer(sessionType);
   }
 
   return (

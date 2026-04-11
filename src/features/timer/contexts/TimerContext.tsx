@@ -15,7 +15,7 @@ type TimerProviderValue = {
   handleSessionCompletion: (
     tasks: TaskState[],
     completeTaskPomodoro: (t: TaskState) => void
-  ) => void;
+  ) => string | undefined;
   initActiveTask: (task: TaskState | null) => void;
   resetTimer: () => void;
 };
@@ -63,12 +63,19 @@ export function TimerProvider({ children }: TimerProviderProps) {
   ) {
     completeTimerPomodoro();
 
-    if (state.onBreak) toast.success('Break cycle ended.');
-    else toast.success('Pomodoro cycle ended.');
+    let sessionType: string;
+
+    if (!state.onBreak) {
+      toast.success('Pomodoro cycle ended.');
+      sessionType = 'POMODORO';
+    } else {
+      toast.success('Break cycle ended.');
+      sessionType = 'BREAK';
+    }
 
     const activeTask = tasks.find((t) => t.id === state.activeTaskId);
 
-    if (!activeTask) return;
+    if (!activeTask) return sessionType;
 
     if (!state.onBreak) {
       completeTaskPomodoro(activeTask);
@@ -79,6 +86,8 @@ export function TimerProvider({ children }: TimerProviderProps) {
         resetTimer();
       }
     }
+
+    return sessionType;
   }
 
   return (
