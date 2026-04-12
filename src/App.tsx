@@ -1,17 +1,20 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Toaster } from './shared/ui/sonner';
 
 import Header from './shared/layout/header/Header';
-import TimerPage from './Pages/TimerPage';
-import TasksPage from './Pages/TasksPage';
-import StatsPage from './Pages/StatsPage';
-import SettingsPage from './Pages/SettingsPage';
 import ToggleDarkMode from './shared/layout/header/ToggleDarkMode';
 import Navigation from './shared/layout/navigation/Navigation';
 
 import { SettingsProvider } from './features/settings/contexts/SettingsContext';
 import { TasksProvider } from './features/tasks/contexts/TasksContext';
 import { TimerProvider } from './features/timer/contexts/TimerContext';
+import SpinnerPage from './Pages/SpinnerPage';
+
+const TimerPage = lazy(() => import('./Pages/TimerPage'));
+const TasksPage = lazy(() => import('./Pages/TasksPage'));
+const StatsPage = lazy(() => import('./Pages/StatsPage'));
+const SettingsPage = lazy(() => import('./Pages/SettingsPage'));
 
 function App() {
   return (
@@ -27,11 +30,40 @@ function App() {
               <main>
                 <section className="flex items-center justify-center">
                   <Routes>
-                    <Route path="/" element={<TimerPage />} />
-                    <Route path="/tasks" element={<TasksPage />} />
-                    <Route path="/stats" element={<StatsPage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route
+                      path="/"
+                      element={
+                        <Suspense fallback={<SpinnerPage />}>
+                          <TimerPage />
+                        </Suspense>
+                      }
+                    />
+                    <Route
+                      path="/tasks"
+                      element={
+                        <Suspense fallback={<SpinnerPage />}>
+                          <TasksPage />
+                        </Suspense>
+                      }
+                    />
+                    <Route
+                      path="/stats"
+                      element={
+                        <Suspense fallback={<SpinnerPage />}>
+                          <StatsPage />
+                        </Suspense>
+                      }
+                    />
+                    <Route
+                      path="/settings"
+                      element={
+                        <Suspense fallback={<SpinnerPage />}>
+                          <SettingsPage />
+                        </Suspense>
+                      }
+                    />
                   </Routes>
+
                   <Toaster />
                 </section>
               </main>
