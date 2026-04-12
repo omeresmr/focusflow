@@ -9,8 +9,16 @@ import Card from '../../../shared/ui/card/Card';
 import SettingNumberInput from './SettingNumberInput';
 import { useSettings } from '../contexts/SettingsContext';
 
+// Input constraints
+const MIN_NUM_VALUE = 1;
+const MAX_NUM_VALUE = 999;
+
 export default function SettingsContent() {
   const { settings, updateSettings } = useSettings();
+
+  // Helper function: constrains numeric input to the allowed range of 1-999
+  const clampValue = (n: number) =>
+    Math.min(Math.max(n, MIN_NUM_VALUE), MAX_NUM_VALUE);
 
   return (
     <div className="settings-con">
@@ -38,7 +46,7 @@ export default function SettingsContent() {
                 updateSettings({
                   durations: {
                     ...settings.durations,
-                    pomodoro: +e.target.value,
+                    pomodoro: clampValue(+e.target.value),
                   },
                 });
               }}
@@ -54,7 +62,7 @@ export default function SettingsContent() {
                 updateSettings({
                   durations: {
                     ...settings.durations,
-                    shortBreak: +e.target.value,
+                    shortBreak: clampValue(+e.target.value),
                   },
                 });
               }}
@@ -70,7 +78,7 @@ export default function SettingsContent() {
                 updateSettings({
                   durations: {
                     ...settings.durations,
-                    longBreak: +e.target.value,
+                    longBreak: clampValue(+e.target.value),
                   },
                 });
               }}
@@ -89,7 +97,7 @@ export default function SettingsContent() {
               onChange={(e) => {
                 updateSettings({
                   ...settings,
-                  longBreakInterval: +e.target.value,
+                  longBreakInterval: clampValue(+e.target.value),
                 });
               }}
             />
