@@ -1,4 +1,4 @@
-import { Bell, Clock, Zap } from 'lucide-react';
+import { Clock, Volume2, Zap } from 'lucide-react';
 import Description from '../../../shared/ui/description/Description';
 import Icon from '../../../shared/ui/icon/Icon';
 import ToggleButton from '../../../shared/ui/buttons/ToggleButton';
@@ -145,29 +145,13 @@ export default function SettingsContent() {
         <SettingsHeader
           icon={
             <Icon className="p-2 bg-green-700/15 text-green-700">
-              <Bell className="w-4 h-4" />
+              <Volume2 className="w-4 h-4" />
             </Icon>
           }
-          title="Notifications"
-          description="Sound & alert preferences"
+          title="Sounds"
+          description="Sound preferences"
         />
-        <SettingContainer className="border-b border-border py-4">
-          <SettingText
-            title="Push notifications"
-            description="Browser notifications"
-          />
-          <div className="setting-input-con">
-            <ToggleButton
-              isToggled={settings.pushEnabled}
-              onClick={() =>
-                updateSettings({
-                  ...settings,
-                  pushEnabled: !settings.pushEnabled,
-                })
-              }
-            />
-          </div>
-        </SettingContainer>
+
         <SettingContainer>
           <SettingText title="Sound effects" description="Play sound effects" />
           <div className="setting-input-con">
