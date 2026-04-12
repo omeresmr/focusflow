@@ -68,6 +68,18 @@ export default function TimerContent() {
     autoStartTimer,
   ]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && timerState.isRunning)
+        timerTick(); // Trigger instant-update
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [timerState.isRunning, timerTick]);
+
   function handleSkipPhase() {
     const sessionType = handleSessionCompletion(tasks, completeTaskPomodoro);
     autoStartTimer(sessionType);

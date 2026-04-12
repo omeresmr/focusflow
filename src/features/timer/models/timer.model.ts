@@ -4,6 +4,7 @@ export interface TimerState {
   onBreak: boolean;
   isRunning: boolean;
   activeTaskId: number | null;
+  startTime: number;
 }
 
 export const createInitialTimerState = (): TimerState => ({
@@ -12,4 +13,5 @@ export const createInitialTimerState = (): TimerState => ({
   onBreak: false,
   isRunning: false,
   activeTaskId: null,
+  startTime: 0,
 });

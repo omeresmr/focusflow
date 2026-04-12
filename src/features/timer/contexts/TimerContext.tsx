@@ -1,7 +1,10 @@
 import { createContext, useContext, useReducer } from 'react';
 
-import reducer, { initialTimerState } from '../reducers/timer.reducer';
-import { type TimerState } from '../models/timer.model';
+import reducer from '../reducers/timer.reducer';
+import {
+  createInitialTimerState,
+  type TimerState,
+} from '../models/timer.model';
 import { type TaskState } from '../../tasks/models/task.model';
 import { toast } from 'sonner';
 
@@ -30,7 +33,7 @@ const TimerContext = createContext<TimerProviderValue | null>(null);
 
 // 4) provider component
 export function TimerProvider({ children }: TimerProviderProps) {
-  const [state, dispatch] = useReducer(reducer, initialTimerState);
+  const [state, dispatch] = useReducer(reducer, createInitialTimerState());
 
   function startTimer() {
     dispatch({ type: 'timer/started' });

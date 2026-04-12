@@ -1,4 +1,7 @@
-import { type TimerState } from '../models/timer.model';
+import {
+  createInitialTimerState,
+  type TimerState,
+} from '../models/timer.model';
 import type { TaskState } from '../../tasks/models/task.model';
 
 // 1) action type
@@ -10,20 +13,11 @@ export type TimerAction =
   | { type: 'timer/pomodoro_completed' }
   | { type: 'timer/active_task_changed'; payload: TaskState | null };
 
-// 2) initialState
-export const initialTimerState = {
-  millisecondsPassed: 0,
-  completedPomodoros: 0,
-  onBreak: false,
-  isRunning: false,
-  activeTaskId: null,
-};
-
-// 3) reducer function
+// 2) reducer function
 export default function reducer(state: TimerState, action: TimerAction) {
   switch (action.type) {
     case 'timer/started':
-      return { ...state, isRunning: true };
+      return { ...state, isRunning: true, startTime: Date.now() };
 
     case 'timer/paused':
       return { ...state, isRunning: false };
@@ -31,11 +25,11 @@ export default function reducer(state: TimerState, action: TimerAction) {
     case 'timer/ticked':
       return {
         ...state,
-        millisecondsPassed: state.millisecondsPassed + 100,
+        millisecondsPassed: Date.now() - state.startTime,
       };
 
     case 'timer/reseted':
-      return initialTimerState;
+      return createInitialTimerState();
 
     case 'timer/pomodoro_completed': {
       // only increase counter after a pomodoro
