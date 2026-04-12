@@ -10,6 +10,7 @@ import { SettingsProvider } from './features/settings/contexts/SettingsContext';
 import { TasksProvider } from './features/tasks/contexts/TasksContext';
 import { TimerProvider } from './features/timer/contexts/TimerContext';
 import SpinnerPage from './Pages/SpinnerPage';
+import NotFoundPage from './Pages/NotFoundPage';
 
 const TimerPage = lazy(() => import('./Pages/TimerPage'));
 const TasksPage = lazy(() => import('./Pages/TasksPage'));
@@ -62,6 +63,7 @@ function App() {
                         </Suspense>
                       }
                     />
+                    <Route path="*" element={<NotFoundPage />} />
                   </Routes>
 
                   <Toaster />
