@@ -1,15 +1,38 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
-// TODO: add localStorage & system preferences
-export default function ToggleDarkMode() {
-  const [isDark, setIsDark] = useState(false);
+// Helper function: Safe boolean parsing from localStorage
+const parseStoredBoolean = (
+  value: string | null,
+  fallback: boolean
+): boolean => {
+  if (value === null) return fallback;
 
-  // TODO: Change to ternary operator
+  try {
+    const parsed = JSON.parse(value);
+    return typeof parsed === 'boolean' ? parsed : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+export default function ToggleDarkMode() {
+  const [isDark, setIsDark] = useState<boolean | null>(() => {
+    const storedValue = localStorage.getItem('darkMode');
+    if (storedValue !== null) return parseStoredBoolean(storedValue, true);
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    return mediaQuery.matches;
+  });
+
   useEffect(() => {
+    if (isDark === null) return;
+
     const root = document.documentElement;
     if (isDark) root.classList.add('dark');
     else root.classList.remove('dark');
+
+    localStorage.setItem('darkMode', JSON.stringify(isDark));
   }, [isDark]);
 
   return (
