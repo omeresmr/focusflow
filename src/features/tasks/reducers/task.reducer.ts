@@ -33,7 +33,9 @@ function reducer(tasksState: TaskState[], action: TaskAction) {
 
     case 'task/started':
       return tasksState.map((t) =>
-        t.id === enteredTask.id ? { ...t, isActive: true } : t
+        t.id === enteredTask.id
+          ? { ...t, isActive: true }
+          : { ...t, isActive: false }
       );
 
     case 'task/paused':
