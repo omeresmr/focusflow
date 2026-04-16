@@ -2,12 +2,14 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useReducer,
 } from 'react';
 
 import { type TaskState, type TaskStatus } from '../models/task.model';
 import reducer from '../reducers/task.reducer';
+import { apiClient } from '../../../shared/api/client';
 
 // 1) provider value type
 type TasksProviderValue = {
@@ -38,9 +40,16 @@ const initialState: TaskState[] = [];
 export function TasksProvider({ children }: TasksProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    (async () => {
+      const data = await apiClient('/tasks', { method: 'GET' });
+      dispatch({ type: 'tasks/loaded', payload: data });
+    })();
+  }, []);
+
   const createTask = useCallback((name: string) => {
-    const newTask = {
-      id: Date.now(),
+    const newTask: TaskState = {
+      id: Date.now().toString(),
       name,
       estimatedPomodoros: 4,
       pomodorosDone: 0,
@@ -49,40 +58,67 @@ export function TasksProvider({ children }: TasksProviderProps) {
     };
 
     dispatch({ type: 'task/created', payload: newTask });
+    apiClient('/tasks', {
+      method: 'POST',
+      body: JSON.stringify(newTask),
+    });
   }, []);
 
   const updateTask = useCallback((task: TaskState) => {
     dispatch({ type: 'task/updated', payload: task });
+    apiClient(`/tasks/${task.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(task),
+    });
   }, []);
 
   const deleteTask = useCallback((task: TaskState) => {
     dispatch({ type: 'task/deleted', payload: task });
+    apiClient(`/tasks/${task.id}`, {
+      method: 'DELETE',
+    });
   }, []);
 
   const runTask = useCallback((task: TaskState) => {
     dispatch({ type: 'task/started', payload: task });
+    apiClient(`/tasks/${task.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(task),
+    });
   }, []);
 
   const pauseTask = useCallback((task: TaskState) => {
     dispatch({ type: 'task/paused', payload: task });
+    apiClient(`/tasks/${task.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(task),
+    });
   }, []);
 
-  // Complete task manually (via checkbox)
   const completeTask = useCallback((task: TaskState) => {
     dispatch({ type: 'task/completed', payload: task });
+    apiClient(`/tasks/${task.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(task),
+    });
   }, []);
 
-  // Uncomplete task manually (via checkbox)
   const uncompleteTask = useCallback((task: TaskState) => {
     dispatch({ type: 'task/uncompleted', payload: task });
+    apiClient(`/tasks/${task.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(task),
+    });
   }, []);
 
-  // Increment pomodorosDone
   const completeTaskPomodoro = useCallback((task: TaskState) => {
     dispatch({ type: 'task/session_ended', payload: task });
+    apiClient(`/tasks/${task.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(task),
+    });
   }, []);
 
-  // Derive task status (pending, completed, active)
   const getTaskStatus = useCallback((task: TaskState): TaskStatus => {
     const { isActive, isCompleted } = task;
 
