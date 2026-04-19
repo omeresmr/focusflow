@@ -47,9 +47,8 @@ export function TasksProvider({ children }: TasksProviderProps) {
     })();
   }, []);
 
-  const createTask = useCallback((name: string) => {
-    const newTask: TaskState = {
-      id: Date.now().toString(),
+  const createTask = useCallback(async (name: string) => {
+    const newTask: Omit<TaskState, 'id'> = {
       name,
       estimatedPomodoros: 4,
       pomodorosDone: 0,
@@ -57,11 +56,13 @@ export function TasksProvider({ children }: TasksProviderProps) {
       isCompleted: false,
     };
 
-    dispatch({ type: 'task/created', payload: newTask });
-    apiClient('/tasks', {
+    // json-server (later back-end) creates ID
+    const createdTask = await apiClient('/tasks', {
       method: 'POST',
       body: JSON.stringify(newTask),
     });
+
+    dispatch({ type: 'task/created', payload: createdTask });
   }, []);
 
   const updateTask = useCallback((task: TaskState) => {
@@ -109,6 +110,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
       method: 'PATCH',
       body: JSON.stringify(task),
     });
+    console.log(task.id);
   }, []);
 
   const completeTaskPomodoro = useCallback((task: TaskState) => {

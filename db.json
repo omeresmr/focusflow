@@ -1,4 +1,29 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "6rnSdH8iHWM",
+      "name": "Test1",
+      "estimatedPomodoros": 4,
+      "pomodorosDone": 0,
+      "isActive": false,
+      "isCompleted": false
+    },
+    {
+      "id": "WC7R5eua9Es",
+      "name": "Test2",
+      "estimatedPomodoros": 4,
+      "pomodorosDone": 0,
+      "isActive": false,
+      "isCompleted": false
+    },
+    {
+      "id": "C1Jnsm2GBpM",
+      "name": "Test3",
+      "estimatedPomodoros": 4,
+      "pomodorosDone": 0,
+      "isActive": false,
+      "isCompleted": true
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
