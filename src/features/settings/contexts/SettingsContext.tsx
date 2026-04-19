@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useReducer,
 } from 'react';
@@ -10,6 +11,7 @@ import {
   createDefaultSettings,
 } from '../models/settings.model';
 import reducer from '../reducers/settings.reducer';
+import { apiClient } from '../../../shared/api/client';
 
 // 1) Provider value type
 type SettingsProviderValue = {
@@ -32,9 +34,33 @@ const initialState = createDefaultSettings();
 export function SettingsProvider({ children }: SettingsProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const updateSettings = useCallback((setting: Partial<SettingsState>) => {
-    dispatch({ type: 'settings/updated', payload: setting });
+  useEffect(() => {
+    (async () => {
+      const data = await apiClient('/settings', { method: 'GET' });
+      dispatch({ type: 'settings/loaded', payload: data });
+    })();
   }, []);
+
+  const updateSettings = useCallback(
+    (setting: Partial<SettingsState>) => {
+      dispatch({ type: 'settings/updated', payload: setting });
+
+      const nextState = {
+        ...state,
+        ...setting,
+        durations: {
+          ...state.durations,
+          ...(setting.durations || {}),
+        },
+      };
+
+      apiClient('/settings', {
+        method: 'PATCH',
+        body: JSON.stringify(nextState),
+      });
+    },
+    [state]
+  );
 
   const settingsValue = useMemo(() => {
     return { settings: state, updateSettings };

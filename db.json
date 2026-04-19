@@ -22,8 +22,19 @@
       "estimatedPomodoros": 4,
       "pomodorosDone": 0,
       "isActive": false,
-      "isCompleted": true
+      "isCompleted": false
     }
   ],
+  "settings": {
+    "durations": {
+      "pomodoro": 28,
+      "shortBreak": 9,
+      "longBreak": 15
+    },
+    "autoStartBreaks": true,
+    "autoStartPomodoros": false,
+    "longBreakInterval": 4,
+    "soundEnabled": true
+  },
   "$schema": "./node_modules/json-server/schema.json"
 }
